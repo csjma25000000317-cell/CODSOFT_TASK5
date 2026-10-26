@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+vault.db
+secret.key
+private_storage/*
+!private_storage/.gitkeep
+.flask_secret
