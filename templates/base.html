@@ -1,1 +1,73 @@
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090d18">
+
+    <title>{% block title %}VaultShare | Your Private Digital Vault{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div class="page-loader" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a class="brand" href="{{ url_for('index') }}">
+                <span class="brand-mark">V.</span>
+                <span>VaultShare</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('dashboard') }}">My Vault</a>
+
+                    <form method="POST" action="{{ url_for('logout') }}"
+                          class="nav-logout-form">
+                        <button type="submit" class="btn btn-small">
+                            Sign Out
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Sign In</a>
+                    <a class="btn btn-small btn-primary"
+                       href="{{ url_for('register') }}">
+                        Get Started
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container flash-container">
+                    {% for category, message in messages %}
+                        <div class="notification {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="brand footer-brand" href="{{ url_for('index') }}">
+                <span class="brand-mark">V.</span>
+                <span>VaultShare</span>
+            </a>
+            <p>Private files. Controlled sharing.</p>
+        </div>
+    </footer>
+</body>
+</html>
+```
