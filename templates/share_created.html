@@ -1,1 +1,53 @@
 
+
+{% extends "base.html" %}
+
+{% block title %}Share Link Created | VaultShare{% endblock %}
+
+{% block content %}
+<section class="result-card">
+    <div class="result-icon">↗</div>
+
+    <p class="eyebrow">SHARING LINK READY</p>
+    <h1>Your link is created<span class="gradient-text">.</span></h1>
+
+    <p>
+        Share this link only with the intended recipient.
+        Access should expire according to the time limit you selected.
+    </p>
+
+    <div class="notification success">
+        <strong>Temporary access link</strong>
+    </div>
+
+    <label for="share-url" style="display:block;text-align:left">
+        Your sharing URL
+    </label>
+
+    <input
+        id="share-url"
+        class="share-url-input"
+        type="text"
+        value="{{ share_url }}"
+        readonly
+        aria-label="Generated sharing URL"
+    >
+
+    <div class="hero-actions" style="justify-content:center">
+        <button class="btn btn-primary"
+                type="button"
+                data-copy-target="#share-url">
+            Copy Sharing Link
+        </button>
+
+        <a class="btn" href="{{ url_for('dashboard') }}">
+            Return to My Vault
+        </a>
+    </div>
+
+    <p class="auth-note">
+        Treat this link like a key. Anyone who receives it may be able
+        to access the shared file until the link expires.
+    </p>
+</section>
+{% endblock %}
