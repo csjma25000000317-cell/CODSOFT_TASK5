@@ -1,1 +1,41 @@
 
+{% extends "base.html" %}
+
+{% block title %}{{ error_title|default('Something went wrong') }} | VaultShare{% endblock %}
+
+{% block content %}
+<section class="error-card">
+    <div class="result-icon">!</div>
+
+    <p class="eyebrow">VAULTSHARE SYSTEM MESSAGE</p>
+
+    <h1>
+        {{ error_title|default('Something went wrong') }}
+    </h1>
+
+    <p>
+        {{ error_message|default('We could not complete your request. Please try again.') }}
+    </p>
+
+    {% if error_code is defined %}
+        <p class="auth-note">Reference code: {{ error_code }}</p>
+    {% endif %}
+
+    <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn-primary" href="{{ url_for('index') }}">
+            Return Home
+        </a>
+
+        {% if session.get('user_id') %}
+            <a class="btn" href="{{ url_for('dashboard') }}">
+                My Vault
+            </a>
+        {% else %}
+            <a class="btn" href="{{ url_for('login') }}">
+                Sign In
+            </a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
