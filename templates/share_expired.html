@@ -1,1 +1,34 @@
 
+
+{% extends "base.html" %}
+
+{% block title %}Link Expired | VaultShare{% endblock %}
+
+{% block content %}
+<section class="result-card">
+    <div class="result-icon">◷</div>
+
+    <p class="eyebrow">TEMPORARY ACCESS ENDED</p>
+    <h1>This link has expired<span class="gradient-text">.</span></h1>
+
+    <p>
+        This sharing link is no longer available. Temporary links help
+        file owners limit how long shared content can be accessed.
+    </p>
+
+    <div class="notification warning">
+        Access is unavailable through this link.
+    </div>
+
+    <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn-primary" href="{{ url_for('index') }}">
+            Return to VaultShare
+        </a>
+    </div>
+
+    <p class="auth-note">
+        If you still need the file, ask the person who shared it to
+        create a new link.
+    </p>
+</section>
+{% endblock %}
