@@ -1,1 +1,209 @@
 
+
+{% extends "base.html" %}
+
+{% block title %}Admin Console | VaultShare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">RESTRICTED ADMINISTRATOR AREA</p>
+            <h1>Admin Console<span class="gradient-text">.</span></h1>
+            <p>Manage user accounts and access permissions.</p>
+        </div>
+        <span class="status-pill">Administrator access</span>
+    </section>
+
+    <section class="stats-grid">
+        <article class="stat-card">
+            <small>Total accounts</small>
+            <strong>{{ users|length }}</strong>
+            <small>Registered accounts</small>
+        </article>
+        <article class="stat-card">
+            <small>Stored files</small>
+            <strong>{{ total_files }}</strong>
+            <small>Files in VaultShare</small>
+        </article>
+        <article class="stat-card">
+            <small>Sharing links</small>
+            <strong>{{ total_shares }}</strong>
+            <small>Created sharing links</small>
+        </article>
+    </section>
+
+    <section class="dashboard-grid">
+        <article class="panel">
+            <h2>Create an account</h2>
+            <p class="panel-subtitle">Create a user or administrator account.</p>
+
+            <form method="POST"
+                  action="{{ url_for('create_user') }}"
+                  class="form-stack">
+                <div>
+                    <label for="new-username">Username</label>
+                    <input class="form-control"
+                           id="new-username"
+                           name="username"
+                           type="text"
+                           minlength="3"
+                           maxlength="30"
+                           pattern="[A-Za-z0-9_]{3,30}"
+                           autocomplete="off"
+                           required
+                           placeholder="Choose a username">
+                </div>
+
+                <div>
+                    <label for="new-password">Password</label>
+                    <input class="form-control"
+                           id="new-password"
+                           name="password"
+                           type="password"
+                           minlength="10"
+                           autocomplete="new-password"
+                           required
+                           placeholder="At least 10 characters">
+                </div>
+
+                <div>
+                    <label for="new-role">Account role</label>
+                    <select class="form-control" id="new-role" name="role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                    Create Account ↗
+                </button>
+            </form>
+        </article>
+
+        <article class="panel">
+            <h2>Administrator guidelines</h2>
+            <p class="panel-subtitle">Use administrative privileges carefully.</p>
+
+            <div class="file-row">
+                <div class="file-icon">♙</div>
+                <div class="file-meta">
+                    <strong>Account oversight</strong>
+                    <small>Review usernames and account status.</small>
+                </div>
+            </div>
+
+            <div class="file-row">
+                <div class="file-icon">⌑</div>
+                <div class="file-meta">
+                    <strong>Permission control</strong>
+                    <small>Grant administrative access only when necessary.</small>
+                </div>
+            </div>
+
+            <div class="file-row">
+                <div class="file-icon">✓</div>
+                <div class="file-meta">
+                    <strong>Protect credentials</strong>
+                    <small>Never share administrator passwords.</small>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="panel" style="margin-bottom:40px">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">ACCOUNT DIRECTORY</p>
+                <h2>Manage users</h2>
+            </div>
+            <span class="status-pill">{{ users|length }} accounts</span>
+        </div>
+
+        {% if users %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Change role</th>
+                        <th>Account control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>
+                            <strong>{{ user.username }}</strong><br>
+                            <small>Account ID: {{ user.id }}</small>
+                        </td>
+
+                        <td>
+                            <span class="role-pill">{{ user.role|capitalize }}</span>
+                        </td>
+
+                        <td>
+                            {% if user.active %}
+                                <span class="status-pill">Active</span>
+                            {% else %}
+                                <span class="notification danger">Inactive</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('change_role', user_id=user.id) }}"
+                                  class="inline-form">
+                                <select name="role"
+                                        aria-label="Role for {{ user.username }}">
+                                    <option value="user"
+                                        {% if user.role == 'user' %}selected{% endif %}>
+                                        User
+                                    </option>
+                                    <option value="admin"
+                                        {% if user.role == 'admin' %}selected{% endif %}>
+                                        Admin
+                                    </option>
+                                </select>
+                                <button class="btn" type="submit">Update</button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('change_user_status', user_id=user.id) }}"
+                                  class="inline-form">
+                                <input type="hidden"
+                                       name="active"
+                                       value="{{ 0 if user.active else 1 }}">
+                                {% if user.active %}
+                                    <button class="btn btn-danger"
+                                            type="submit"
+                                            data-confirm="Deactivate this account?">
+                                        Deactivate
+                                    </button>
+                                {% else %}
+                                    <button class="btn"
+                                            type="submit"
+                                            data-confirm="Reactivate this account?">
+                                        Activate
+                                    </button>
+                                {% endif %}
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No accounts found</h3>
+            <p>Registered accounts will appear here.</p>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
