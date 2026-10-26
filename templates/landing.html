@@ -1,1 +1,136 @@
+```html
+{% extends "base.html" %}
 
+{% block title %}VaultShare | Your Private Digital Vault{% endblock %}
+
+{% block content %}
+<section class="container hero">
+    <div class="hero-copy">
+        <p class="eyebrow">SECURE FILE SHARING PLATFORM</p>
+
+        <h1>
+            Your files.<br>
+            <span class="gradient-text">Your rules.</span>
+        </h1>
+
+        <p>
+            A private space for your important files. Keep your documents
+            encrypted, manage access to your content, and share files
+            through time-limited links when you choose.
+        </p>
+
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ url_for('register') }}">
+                Create Your Vault <span>↗</span>
+            </a>
+            <a class="btn" href="{{ url_for('login') }}">
+                Sign In
+            </a>
+        </div>
+
+        <p class="auth-note">
+            Already have an account? Sign in instead of registering again.
+        </p>
+    </div>
+
+    <div class="hero-art" aria-label="Illustration of a secure file vault">
+        <div class="vault-card">
+            <div class="vault-card-top">
+                <a class="brand" href="{{ url_for('index') }}">
+                    <span class="brand-mark">V.</span>
+                    <span>Private Vault</span>
+                </a>
+                <span class="status-pill">Protected</span>
+            </div>
+
+            <h3>Your digital workspace</h3>
+            <p>One place for the files that matter.</p>
+
+            <div class="file-row">
+                <div class="file-icon">▤</div>
+                <div class="file-meta">
+                    <strong>Important documents</strong>
+                    <small>Private file storage</small>
+                </div>
+                <span aria-hidden="true">✦</span>
+            </div>
+
+            <div class="file-row">
+                <div class="file-icon">↗</div>
+                <div class="file-meta">
+                    <strong>Controlled sharing</strong>
+                    <small>Temporary access links</small>
+                </div>
+                <span aria-hidden="true">◷</span>
+            </div>
+
+            <div class="file-row">
+                <div class="file-icon">⌑</div>
+                <div class="file-meta">
+                    <strong>Access management</strong>
+                    <small>Accounts and permissions</small>
+                </div>
+                <span aria-hidden="true">✓</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">BUILT AROUND PRIVACY</p>
+            <h2>More control. Less worry.</h2>
+        </div>
+        <p>Designed for secure and convenient file management.</p>
+    </div>
+
+    <div class="feature-grid">
+        <article class="feature-card">
+            <div class="feature-icon">⌑</div>
+            <h3>Encrypted Storage</h3>
+            <p>
+                Files are encrypted before being stored, helping protect
+                their contents from unauthorized access.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">◷</div>
+            <h3>Temporary Sharing</h3>
+            <p>
+                Create time-limited sharing links for files you want
+                other people to access.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">♙</div>
+            <h3>Account Management</h3>
+            <p>
+                Separate user accounts help keep files and permissions organized.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="container section">
+    <div class="result-card">
+        <p class="eyebrow">YOUR FILES, YOUR CHOICE</p>
+        <h2>Ready to enter your vault?</h2>
+        <p>
+            Create an account or sign in to manage your private files.
+        </p>
+
+        <div class="hero-actions" style="justify-content:center">
+            <a class="btn btn-primary" href="{{ url_for('register') }}">
+                Get Started
+            </a>
+            <a class="btn" href="{{ url_for('login') }}">
+                Sign In
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+```
