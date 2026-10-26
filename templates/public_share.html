@@ -1,1 +1,42 @@
 
+
+{% extends "base.html" %}
+
+{% block title %}Shared File | VaultShare{% endblock %}
+
+{% block content %}
+<section class="result-card">
+    <div class="result-icon">⌑</div>
+
+    <p class="eyebrow">SECURE FILE SHARING</p>
+    <h1>A file was shared with you<span class="gradient-text">.</span></h1>
+
+    <p>
+        The owner has provided temporary access to this file.
+        Download it only if you trust the person who shared the link.
+    </p>
+
+    <div class="panel" style="margin:25px 0;text-align:left">
+        <div class="file-row" style="margin:0">
+            <div class="file-icon">▤</div>
+            <div class="file-meta">
+                <strong>{{ share.filename }}</strong>
+                <small>Shared through VaultShare</small>
+            </div>
+            <span class="status-pill">Available</span>
+        </div>
+    </div>
+
+    <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn-primary"
+           href="{{ url_for('public_download', token=token) }}">
+            Download Shared File ↗
+        </a>
+    </div>
+
+    <p class="auth-note">
+        This link may expire. Do not forward it to people who were not
+        intended to receive the file.
+    </p>
+</section>
+{% endblock %}
