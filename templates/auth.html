@@ -1,1 +1,163 @@
 
+
+{% extends "base.html" %}
+{% block title %}
+{% if mode == "setup_admin" %}Create Admin{% elif mode == "admin_login" %}Admin Login{% elif mode == "register" %}Create Account{% else %}Secure Login{% endif %} | VaultShare
+{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-visual">
+        <div class="auth-orbit orbit-one"></div>
+        <div class="auth-orbit orbit-two"></div>
+
+        <div class="auth-visual-content">
+            <div class="vault-symbol">
+                <span class="vault-ring"></span>
+                <span class="vault-lock">⌑</span>
+            </div>
+
+            <p class="eyebrow">PRIVATE. ENCRYPTED. YOURS.</p>
+            <h1>Your files.<br><span>Your control.</span></h1>
+            <p class="auth-description">
+                A private digital vault designed to protect your files
+                and keep your sharing under control.
+            </p>
+
+            <div class="security-points">
+                <div><span>✦</span> Encrypted file storage</div>
+                <div><span>✦</span> Protected user access</div>
+                <div><span>✦</span> Time-limited sharing</div>
+            </div>
+        </div>
+
+        <div class="floating-chip chip-top">AES-style authenticated encryption</div>
+        <div class="floating-chip chip-bottom"><span class="live-dot"></span> VAULT SYSTEM</div>
+    </div>
+
+    <div class="auth-panel">
+        <div class="auth-panel-inner">
+            <div class="auth-mobile-mark">V<span>.</span></div>
+
+            {% if mode == "setup_admin" %}
+                <p class="eyebrow">FIRST-TIME CONFIGURATION</p>
+                <h2>Create your<br>administrator account.</h2>
+                <p class="auth-subtitle">
+                    This one-time setup creates the first administrator.
+                    Choose credentials only you know.
+                </p>
+
+                <form method="POST" action="{{ url_for('setup_admin') }}" class="auth-form">
+                    <label for="username">Admin username</label>
+                    <input id="username" name="username" type="text"
+                           minlength="3" maxlength="30"
+                           pattern="[A-Za-z0-9_]{3,30}"
+                           autocomplete="username" required
+                           placeholder="Choose an admin username">
+
+                    <label for="password">Strong password</label>
+                    <input id="password" name="password" type="password"
+                           minlength="12" autocomplete="new-password"
+                           required placeholder="At least 12 characters">
+
+                    <label for="confirm_password">Confirm password</label>
+                    <input id="confirm_password" name="confirm_password"
+                           type="password" minlength="12"
+                           autocomplete="new-password" required
+                           placeholder="Enter password again">
+
+                    <button class="btn btn-primary auth-submit" type="submit">
+                        Create Administrator <span>↗</span>
+                    </button>
+                </form>
+
+                <p class="auth-note">One-time setup · Do not share your admin password.</p>
+
+            {% elif mode == "admin_login" %}
+                <p class="eyebrow">RESTRICTED ACCESS</p>
+                <h2>Administrator<br>sign in.</h2>
+                <p class="auth-subtitle">
+                    Manage users, access permissions and vault activity.
+                </p>
+
+                <form method="POST" action="{{ url_for('admin_login') }}" class="auth-form">
+                    <label for="username">Admin username</label>
+                    <input id="username" name="username" type="text"
+                           autocomplete="username" required
+                           placeholder="Enter admin username">
+
+                    <label for="password">Admin password</label>
+                    <input id="password" name="password" type="password"
+                           autocomplete="current-password" required
+                           placeholder="Enter admin password">
+
+                    <button class="btn btn-primary auth-submit" type="submit">
+                        Enter Admin Console <span>↗</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Public user? <a href="{{ url_for('login') }}">User login</a>
+                </p>
+
+            {% elif mode == "register" %}
+                <p class="eyebrow">JOIN YOUR PRIVATE VAULT</p>
+                <h2>Create your<br>account.</h2>
+                <p class="auth-subtitle">
+                    Create one account and use it again whenever you return.
+                </p>
+
+                <form method="POST" action="{{ url_for('register') }}" class="auth-form">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text"
+                           minlength="3" maxlength="30"
+                           pattern="[A-Za-z0-9_]{3,30}"
+                           autocomplete="username" required
+                           placeholder="Choose a username">
+
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password"
+                           minlength="10" autocomplete="new-password"
+                           required placeholder="At least 10 characters">
+
+                    <button class="btn btn-primary auth-submit" type="submit">
+                        Create Secure Account <span>↗</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Already registered? <a href="{{ url_for('login') }}">Sign in</a>
+                </p>
+
+            {% else %}
+                <p class="eyebrow">WELCOME BACK</p>
+                <h2>Unlock your<br>private vault.</h2>
+                <p class="auth-subtitle">
+                    Sign in with your existing account to access your files.
+                </p>
+
+                <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text"
+                           autocomplete="username" required
+                           placeholder="Enter your username">
+
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password"
+                           autocomplete="current-password" required
+                           placeholder="Enter your password">
+
+                    <button class="btn btn-primary auth-submit" type="submit">
+                        Unlock My Vault <span>↗</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    New public user? <a href="{{ url_for('register') }}">Create account</a>
+                </p>
+                
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
